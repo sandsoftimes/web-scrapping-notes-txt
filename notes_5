@@ -1,0 +1,391 @@
+786!!!
+
+Selenium Over view:
+
+In this section, we will learn the basics of web scrapping using selenium. This section, project # 1 and project # 2 cover all the things that we can do with selenium
+
+Install Selenium:
+
+	-pip install selenium==3.141.0
+	
+Video 2: 
+
+Why selenium?
+
+Javascript Driven Websites
+
+it helps scrap from dynamic websites
+
+How to check web run java or not
+
+Go to inspect and go to setting
+
+Look for Debugger option:
+
+	-Disable Javascript
+	
+	-look for msg "javascript is not available"
+	
+	-this shows website run with javascript
+
+Another way:
+
+	-Go to inspect and then go to settings
+	
+	-Go to debugger option and disable debugger and reload the page
+	
+	-And see what happens to site. It loads or not
+	
+These area the ways that run javascript behave when we disable script
+
+For selenium usage, first go and check whether the website use the javascript or not and then proceeds
+
+Video 3: 
+
+Installing Selenium and Chrome Driver:
+
+	-To work with selenium we need to install:
+	
+	-Chrome Driver 
+	
+	-Selenium
+	
+	-To install chrome driver go to the link
+	
+	-Choose the same of like your chrome browser version
+	
+	-To check chrome version:
+	
+	-Go to the settings and then to Help and Then to about Google Chrome. You can see the chrome version in front of you
+	
+	-After downlaoding the chrome driver, unzip it and remember the place where u have unzip it.
+	
+	-Now its time to install selenium, use:
+	
+	-pip install selenium 
+	
+	-on terminal
+	
+	-U have selenium installed
+	
+	-In the next video, we will start scraping the websites using selenium
+	
+Video 4:
+
+Importing Libraries and Creating The Driver
+
+Now we'll code:
+
+	from selenium import webdriver
+	website = 'https://www.adamchoi.co.uk/overs/detailed'  # Define which site to scrape
+	driver = webdriver.Chrome()  # Define the driver variable
+	driver.get(website)
+	
+	drive.quit()
+	
+The above code is the must do code, we've to write it everytime when creating a bot.
+
+The selenium version 4.12 and above donot need chromedriver e.t.c. It has prebuilt drivers e.t.c in it.
+
+This was the error on which i was working from last 4 hours and alhamdulillah now is solved
+
+Video 5:
+
+How to find elements with Selenium
+
+In selenium, we use driver to find elements
+
+Similar to zip object like in beautiful soup
+
+Let's see how to located element with its id:
+
+	-driver.find_element_by_id('id')
+	
+	-driver.find_element_by_class_name('class_name')
+	
+We can also locate elements by tag names
+
+xpath is the best way to find an element
+
+We can also list element from the dropdowns in a website
+
+Video 6:
+
+Clicking on a button
+
+There are buttons on a page
+
+Put two tables together
+
+Use XPath
+
+Xpath Syntax:
+
+	-//tagName[@AttributeName="Value"]
+	
+	-//label[@analytics-event="All matches"]
+	
+	-all_matches_button=driver.find_element_by_xpath('//label[@analytics-event="All matches"]')
+	all_matches_button.click() #click() to click a button
+	
+	-Whole code:
+	
+		from selenium import webdriver
+
+		website = 'https://www.adamchoi.co.uk/overs/detailed'
+		driver = webdriver.Chrome()
+		driver.get(website)
+
+		all_matches_button = driver.find_element('xpath','//label[@analytics-event="All matches"]')
+		all_matches_button.click()
+
+		# driver.quit()
+ 
+This code will show how to click on a button on a website by using selenium
+
+In the next video we will find how to extract data from a table 
+
+Video 7:
+
+Extracting Data From A Table
+
+Table use Tr and Td
+
+Tr=row
+
+Td=data on each column
+
+Inspect the website:
+
+	-tr represent a single row
+	
+	-td represent the column in the row
+	
+driver.find_element(By.TAG_NAME, "tr")
+
+before the above line, import his library:
+	
+	from selenium.webdriver.common.by import By
+	
+To get multiple tr use this:
+
+	driver.find_elements(By.TAG_NAME, "tr")
+	
+This will give list 
+
+right now the data is stored in a single list
+
+Code: 
+	
+	from selenium import webdriver
+	from selenium.webdriver.common.by import By
+
+	website = 'https://www.adamchoi.co.uk/overs/detailed'
+	driver = webdriver.Chrome()
+	driver.get(website)
+
+	all_matches_button = driver.find_element('xpath','//label[@analytics-event="All matches"]')
+	all_matches_button.click()
+
+
+	matches=driver.find_elements(By.TAG_NAME, "tr")
+	for match in matches:
+	    print(match.text)
+
+	# driver.quit()
+
+
+we can later on store it in a dataframe
+
+index in python starts from zero
+
+but index in xpath starts from 1:
+
+	-//tr/td[1]
+	
+	-to move through column 1 of every row
+	
+	-Whole Code:
+	
+	from selenium import webdriver
+	from selenium.webdriver.common.by import By
+
+	website = 'https://www.adamchoi.co.uk/overs/detailed'
+	driver = webdriver.Chrome()
+	driver.get(website)
+
+	all_matches_button = driver.find_element('xpath','//label[@analytics-event="All matches"]')
+	all_matches_button.click()
+
+
+	matches=driver.find_elements(By.TAG_NAME, "tr") #This will have list of all rows (tr) as we are using find_elements
+
+	date=[] # To store values of date column of all rows
+	home_team=[] # To store values of home_team column of all rows
+	score=[] # To store values of score column of all rows
+	away_team=[] # To store values of away_team column of all rows
+
+	for match in matches: # this loop will take 1 room at a time from the rows list
+	    date.append(match.find_element('xpath','./td[1]').text) #append column 1 data of match row in date list
+	    home=match.find_element('xpath','./td[2]').text #store column 2 data of match row in home variable
+	    home_team.append(home) #append home variable value in home_team list
+	    print(home) #printing home variable
+	    score.append(match.find_element('xpath','./td[3]').text) #append column 3 data of match row in score list
+	    away_team.append(match.find_element('xpath','./td[4]').text) #append column 4 data of match row in date list
+
+	# driver.quit()
+
+In the next video, we will learn how to store this data that we are getting
+
+Video 8:
+
+Exporting Data to a CSV file with Pandas
+
+Dataframe is a like spreadsheet
+
+First install pandas:
+
+	-pip install pandas
+	
+Selenium is not so fast 
+
+but Scrappy is faster than the selenium
+
+Code to store the scraped data into a csv file is below:
+
+	-Code:
+	
+	from selenium import webdriver
+	from selenium.webdriver.common.by import By
+	import pandas as pd # pd is a short name for pandas now
+	    
+
+	website = 'https://www.adamchoi.co.uk/overs/detailed'
+	driver = webdriver.Chrome()
+	driver.get(website)
+
+	all_matches_button = driver.find_element('xpath','//label[@analytics-event="All matches"]')
+	all_matches_button.click()
+
+
+	matches=driver.find_elements(By.TAG_NAME, "tr") #This will have list of all rows (tr) as we are using find_elements
+
+	date=[] # To store values of date column of all rows
+	home_team=[] # To store values of home_team column of all rows
+	score=[] # To store values of score column of all rows
+	away_team=[] # To store values of away_team column of all rows
+
+	for match in matches: # this loop will take 1 room at a time from the rows list
+	    date.append(match.find_element('xpath','./td[1]').text) #append column 1 data of match row in date list
+	    home=match.find_element('xpath','./td[2]').text #store column 2 data of match row in home variable
+	    home_team.append(home) #append home variable value in home_team list
+	    print(home) #printing home variable
+	    score.append(match.find_element('xpath','./td[3]').text) #append column 3 data of match row in score list
+	    away_team.append(match.find_element('xpath','./td[4]').text) #append column 4 data of match row in date list
+
+	driver.quit()
+
+	df=pd.DataFrame({'date':date,'home_team':home_team,'score':score,'away_team':away_team}) # 'Key':List(e.g date,home_team .e.t.c)
+	df.to_csv('football_data.csv',index=False)
+	print(df)
+	
+Video 9:
+
+Selecting Elements within a Dropdown:
+
+	-So we will now work on how to select elements from a drop down
+
+	-Drop down are also made with ajax
+	
+	-inspect the code 
+	
+	-import the following library by using the this line of code below:
+	
+		from selenium.webdriver.support.ui import Select
+	
+	-Let's how we can locate values from a drop down
+	
+	-See the id = country
+	
+	-there will also be id with the name league in it
+	
+		-id=league
+		
+	-there will also be id with the name season in it
+	
+		-id=season
+		
+	-Copy the id which is country 
+	
+	-write this line into your code:
+	
+		Select(driver.find_element(By.ID,'country'))
+		
+	-Store this in a variable
+	
+		dropdown=Select(driver.find_element(By.ID,'country'))
+		
+	-Add this line as well to select a specific value from a drop down
+	
+		dropdown.select_by_visible_text('Spain')
+		
+	-To avoid error we have to use weights 
+	
+	-Let's see how to create weights 
+	
+	-Import the time library
+	
+		import time
+		
+	-These are the 3 added lines to our code:
+	
+		dropdown=Select(driver.find_element(By.ID,'country'))
+		dropdown.select_by_visible_text('Spain')
+
+		time.sleep(3)
+		
+	-The whole Updated Code Of Selenium Bot is below:
+	
+	-Code:
+		
+		from selenium import webdriver
+		from selenium.webdriver.support.ui import Select
+		from selenium.webdriver.common.by import By
+		import pandas as pd # pd is a short name for pandas now
+		import time
+
+		website = 'https://www.adamchoi.co.uk/overs/detailed'
+		driver = webdriver.Chrome()
+		driver.get(website)
+
+		all_matches_button = driver.find_element('xpath','//label[@analytics-event="All matches"]')
+		all_matches_button.click()
+
+		dropdown=Select(driver.find_element(By.ID,'country'))
+		dropdown.select_by_visible_text('Spain')
+
+		time.sleep(3)
+
+		matches=driver.find_elements(By.TAG_NAME, "tr") #This will have list of all rows (tr) as we are using find_elements
+
+		date=[] # To store values of date column of all rows
+		home_team=[] # To store values of home_team column of all rows
+		score=[] # To store values of score column of all rows
+		away_team=[] # To store values of away_team column of all rows
+
+		for match in matches: # this loop will take 1 room at a time from the rows list
+		    date.append(match.find_element('xpath','./td[1]').text) #append column 1 data of match row in date list
+		    home=match.find_element('xpath','./td[2]').text #store column 2 data of match row in home variable
+		    home_team.append(home) #append home variable value in home_team list
+		    print(home) #printing home variable
+		    score.append(match.find_element('xpath','./td[3]').text) #append column 3 data of match row in score list
+		    away_team.append(match.find_element('xpath','./td[4]').text) #append column 4 data of match row in date list
+
+		driver.quit()
+
+		df=pd.DataFrame({'date':date,'home_team':home_team,'score':score,'away_team':away_team}) # 'Key':List(e.g date,home_team .e.t.c)
+		df.to_csv('football_data.csv',index=False)
+		print(df)
+		
+The Introduction To Selenium Portion Is Completed
+		

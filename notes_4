@@ -1,0 +1,104 @@
+786!!!!
+
+Xpath:
+
+This section is extremely useful if u want to easilty learn web scrapping with selenium and scrapy, so please donot skip it. The XPath syntax might be a bit tricky at the beginning, so use the PDF cheat sheat available in section 1 to memorize it.
+
+Video 2:
+
+XPath Syntax, Functions and Operators
+
+Xpath:
+
+	-is easily key to learn web scrapping with selenium and scrappy
+	
+	-stands for xml path language
+	
+	-it is a query language
+	
+	-for selecting nodes
+	
+	-can also select elements for pages
+	
+	-css=cascading styling sheet 
+	
+	-css and xpath have some similarity in terms of syntax
+	
+	-we'll mainly see how to select elements with xpath
+	
+XPath Syntax:
+
+	-We can select element by,
+
+		-//tagName 
+		
+		-//tagName[1] 	to select first tag with this name
+		
+		-//tagName[@AttriubteName="Value"] 
+		
+Xpath Functions:
+
+	-contains()
+	
+	-starts-with()
+	
+	-//tagName[contains(@AttributeName,"Value")]
+	
+	-tagName[(expression 1) and (expression 2)]
+	
+Video 3: 
+
+XPATH Playground:
+
+	-//h1/text()
+	
+	-//p[2] for the second paragraph
+	
+	-//p[1] for the first paragraph
+	
+	-//div[@class="full-script"]/text()  to get the text only
+	
+	-//p[@class="plot"]/text()
+	
+	-//p[(@class="plot") or (@class="plot 2")]/text()
+	
+	-//p[(@class="plot") and (@class="plot 2")]/text() will not give any results 
+	
+	-//p[contains(@class,"plot")]
+	
+	-//div[contains(@class,"full-script")]
+	
+Video 4:
+
+Special Characters
+
+that help in ease while using the Xpath
+
+/ single slash character
+
+// double slash character
+
+//div/text() will only give the value in this node
+
+//div/p1/text() will give the value in the child nodes
+
+we first have to write the element before /text()
+
+//text() locate element at any level in the documente automatically
+
+ //div//text() will display the text at any level in a document
+ 
+ //p/. the p node itself will return 
+ 
+ if we write //p/.. its parent node will be returned
+ 
+ //h1/.. 
+ 
+ 
+/* will select all the childern elements 
+
+@ select the attribute
+
+() for grouping
+
+[n] represent index which index should be selected

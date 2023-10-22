@@ -1,0 +1,85 @@
+786!!!
+
+Video 2: 
+
+Scrapping Multiple Pages With Beautiful Soup
+
+In this section, we will learn how to scrape multiple pages with Beautiful Soup. Some of the approaches we will see in this section are workarounds,so don't worry if it seems a bit complicated. In the scrapy section, i will show you how to do this with few lines of code
+
+Getting Data from multiple articles:
+
+	-getting data from all articles
+	
+	-go to code:
+	
+		-Code below:
+		
+		from bs4 import BeautifulSoup
+		import requests
+		
+		website='https://subslikescript.com/movies'
+		result=requests.get(website)
+		content=result.text
+		soup=BeautifulSoup(content,'lxml')
+		#print(soup.prettify())
+		
+		box=soup.find('article',class_='main-article')
+		
+		title=box.find('h1').get_text()
+		transcript=box.find('div',class_='full-script').get_text(strip=True,separator=' ')
+		
+		with open(f'{title}.txt','w') as file:
+			file.write(transcript)
+			
+	-above is the code for scrapping from a single article
+	
+	-now we are going to modify above code to extract data from multiple articles
+	
+		from bs4 import BeautifulSoup
+		import requests
+		
+		root='https://subslikescript.com'
+		website=f'{root}/movies'
+		result=requests.get(website)
+		content=result.text
+		soup=BeautifulSoup(content,'lxml')
+		#print(soup.prettify())
+		
+		#soup.find('article',class_='main-article')
+		box=soup.find('article',class_='main-article')
+		
+		
+		links=[]
+		for link in box.find_all('a',href=True):
+			links.append(link['href'])
+		
+		print(links)
+		
+		
+		
+			
+		#it will print the list of all links 
+				
+		#find will give only one
+		#find_all will give all of that type
+		
+		
+		for link in links: 
+			website=f'{root}/{link}'
+			result=requests.get(website)
+			content=result.text
+			soup=BeautifulSoup(content,'lxml')
+		
+			box=soup.find('article',class_='main-article')
+		
+			title=box.find('h1').get_text()
+			transcript=box.find('div',class_='full-script').get_text(strip=True,separator=' ')
+		
+			with open(f'{title}.txt','w') as file:
+				file.write(transcript)
+				
+		-this above whole code will create the files with the name of the movie titles with all the movie information of the movies within the respective files
+		
+That's how to scrape multiple pages with beautiful soap
+
+Video 3: Remaining

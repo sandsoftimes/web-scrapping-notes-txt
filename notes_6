@@ -1,0 +1,23 @@
+786!!!!
+
+Video 1:
+
+Building The Bot
+
+In this video, we are going to handle pagination with selenium
+
+We are going to scrap audible
+
+Initially we are going to scrape one page, later on we are going to scrape multiple pages
+
+Let's start writing the code 
+
+But first go to the target website and:
+
+	-Inspect it 
+	
+	-First inspect the title of the first movie or book
+	
+	-Then go to its parent 
+	
+	-Finally you will know the container div class that contains all the books

@@ -1,0 +1,112 @@
+786!!!!!
+
+
+Video 2: 
+
+We are gonna learn how to login to website using selenium
+
+Logging to website using webscrapping is not a good practice
+
+By doing this your ip can get blocked but also your account can get blocked 
+
+Let see some code to login to twitter through selenium:
+
+	-Code:
+	
+	from selenium import webdriver
+	import time
+	import os
+
+	web = "https://twitter.com/i/flow/login"
+	# path = "/Users/frankandrade/Downloads/chromedriver"
+	driver = webdriver.Chrome()
+	driver.get(web)
+	driver.maximize_window()
+
+	# wait of 6 seconds to let the page load the content
+	time.sleep(6)  # this time might vary depending on your computer
+
+	# locating username and password inputs and sending text to the inputs
+	# username
+	username = driver.find_element('xpath','//input[@autocomplete ="username"]')
+	username.send_keys("janeebee1092@gmail.com")  # Write Email Here
+	# username.send_keys(os.environ.get("TWITTER_USER"))
+
+	# Clicking on "Next" button
+	next_button = driver.find_element('xpath','//div[@role="button"]//span[text()="Next"]')
+	next_button.click()
+
+	# wait of 2 seconds after clicking button
+	time.sleep(2)
+
+	# password
+	password = driver.find_element('xpath','//input[@autocomplete ="current-password"]')
+	password.send_keys("90as()nm")  # Write Password Here
+	# password.send_keys(os.environ.get("TWITTER_PASS"))
+
+	# locating login button and then clicking on it
+	login_button = driver.find_element('xpath','//div[@role="button"]//span[text()="Log in"]')
+	login_button.click()
+
+
+	# closing driver
+	# driver.quit()
+	
+By the above code you will automate the process of logging into the twitter by using username/email and password
+
+Video 3:
+
+Building a function.
+
+Half of the video is done on the Laptop, so u can also get the content from there as well 
+
+Video 4: 
+
+Infinite Scrolling
+
+We are going into infinite scrolling.
+
+Infinite Scrolling:
+
+	-In some sites, when we scroll down, new content loads. This is known as the infinite scrollin. Selenium is the best way to handle infinite scrolling
+	
+	-We are going to scrape a page which has infinite scrolling
+	
+	-Choose tweet which has some limited comments 
+	
+	-334 comments tweets
+	
+	-click on the tweet
+	
+	-copy the address of the tweet	
+	
+	-Code for infinite scrolling is below:
+		
+		from selenium import webdriver
+		from selenium.webdriver.common.by import By
+		from selenium.webdriver.support.ui import WebDriverWait
+		from selenium.webdriver.support import expected_conditions as EC
+		import pandas as pd
+		import time
+
+		web = "https://twitter.com/HulkHogan/status/922554774633009153"
+		driver = webdriver.Chrome()
+		driver.get(web)
+		driver.maximize_window()
+
+		last_height=driver.execute_script("return document.body.scrollHeight")
+		while True:
+		    driver.execute_script("window.scrollTo(0,document.body.scrollHeight)") # this script will make it sure that the script will run through out the height of the page
+		    time.sleep(5) # to sleep 
+		    new_height=driver.execute_script("return document.body.scrollHeight")
+		    if new_height==last_height:
+			break
+		    else:
+			last_height=new_height
+		driver.quit()
+ 
+Video 5: 
+
+Infinite Scrolling with web scrapping
+
+

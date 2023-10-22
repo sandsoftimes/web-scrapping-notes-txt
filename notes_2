@@ -1,0 +1,183 @@
+786!!!
+
+Web Scrapping
+
+Introduction To Beautiful Soup:
+
+	-In this section, we'll learn beautiful soup. This is the easiest python library for web scrapping, but it has alot of limitations. This is why we'll learn the essential stuff of web scraping with Beautiful Soup and then move to more powerful scraping tools
+		
+Video 2:
+
+	-First thing, import libraries
+	
+	-import requests
+	
+	-second library is BeautifulSoup
+	
+	-from bs4 import BeautifulSoup
+	
+	-if not installed installed these libraries
+	
+	-pip install bs4
+	
+	-to install beautifulsoup
+	
+	-pip install requests
+	
+	-to install requests
+	
+	-now install another thing that is parser to parse html code
+	
+	-lxml, we are going to use 
+	
+	-pip install lxml
+	
+	-it will install the parser 
+	
+	-that's it for the libraries installation
+	
+	-BeautifulSoup to scrap websites
+	
+	-requests used to send request to a website
+	
+	-we will use parser to parse the pulled data
+	
+Video 3:
+
+	-easiest libraries for web scrapping
+	
+	-dependecies
+	
+	-request to request sites
+	
+	-lxml for parser 
+	
+	-Steps:
+	
+		-from bs4 import BeautifulSoup
+		
+		-import requests
+		
+		-fetching (send request and get response)
+		
+		-content (result.text)
+		
+		-soup (create soup object)
+		
+		-it will locate any element we want
+		
+		-soup.find(id="specific_id")
+		
+		-soup.find('tag',class_="class_name")
+		
+		-first tag and then class name
+		
+		-lets look at basic html code
+		
+		-soup.find('article',class_="main_article")
+		
+		-soup.find('h1')
+		
+		-soup.find_all('h2') to find multiple elements of the same tag
+		
+		-soup.find_all() returns a list
+		
+		-soup.find() only returns an element
+		
+Video 4: 
+
+	-How to get html from a website
+	
+	-title
+	
+	-description
+	
+	-transcript(very long)						
+		
+	-same way to scrape the site
+	
+	-pratice:
+	
+		 from  bs4 import BeautifulSoup
+		 import requests
+		 website='https://subslikescript.com/movie/Titanic-120338'
+		 result=requests.get(website) #this will give response 
+		 content=result.text #using method to see the results
+		 #by this we can say that we have the content of the site
+		 soup=BeautifulSoup(content,'lxml') #indicate which parser we are going to use
+		 #Here we are using parser to get the code using beautiful soup
+		 #now we can print these results
+		 print(soup.prettify()) #prettify() is used to make our html code look nicer
+		 
+Video 5: 
+
+	-Now we can get not only the code but also the data 
+	
+	-before it
+	
+	-look at html code
+	
+	-be familiar with the html code 
+	
+	-how to get to these nodes
+	
+	-we are going to go to the website
+	
+	-go get to these notes, right click and go to inspect
+	
+	-we get the html code of the part
+	
+	-if we want to find out an element,we must have to follow down the list of entering data:
+		
+		-ID (first)
+		
+		-Class name (second)
+		
+		-Tag name, CSS Selector
+		
+		-Xpath
+	
+	-copy the root, which is the main article:
+	
+		from bs4 import BeautifulSoup
+		import requests
+		
+		website='https://subslikescript.com/movie/Titanic-120338'
+		result=requests.get(website)
+		content=result.text
+		
+		soup=BeautifulSoup(content,'lxml')
+		#print(soup.prettify())
+		
+		box=soup.find('article',class_='main-article') #two ways to find elements, first one is find() and secondone is find_all()
+		
+		#we can use elements from the inspect option
+		#soup.find('h1').get_text() #we are fetching the title text now
+		
+		#instead of using soup.find('h1') we can also use the box because it has the main article and the h1 is sub portion of main article so it can also be used for the same purpose
+		
+		title =box.find('h1').get_text()
+		
+		transcript=box.find('div',class_='full-script').get_text(strip=True,separator=' ')
+		print(title)
+		print(transcript)
+		
+		#.get_text() is used to only get the text
+		#strip delete spaces in the begin and at the end
+		#separator will write whole the line in single line rather than splitting them before
+		
+Video 6:
+
+	-Exporting data to a file
+	
+	-to create a file in python we use with
+	
+	-with open('titanic.txt','w') as file:
+		file.write(transcript)
+	
+	-we can also write it using a f string
+	
+	-with open(f'{title}.txt','w') as file: #title+'.txt'
+		file.write(transcript)
+		
+	-This was all about scraping content from a website
